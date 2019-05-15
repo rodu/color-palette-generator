@@ -1,9 +1,9 @@
-(function colorDefinition(Vue){
+(function colorDefinition(Vue, rodu, paletteGenerator){
   'use strict';
 
   const template = `
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-2">
         <div class="color-definition">
           <div class="form-group">
             <label>Color Name
@@ -12,20 +12,100 @@
           </div>
           <div class="form-group">
             <label>Hex Value
-              <input type="text" class="form-control" v-model="color.hex">
+              <input type="text" class="form-control" v-model="color.hex" @input="onColorChange()">
             </label>
           </div>
         </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-10">
         <h2 v-if="color.name">{{color.name}}</h2>
-        <div class="color-box" v-bind:style="{backgroundColor: color.hex}"></div>
+        <div class="color-box" :style="{backgroundColor: color.hex}"></div>
+        <div class="color-shades">
+          <div
+            v-for="shade in color.shades"
+            v-bind:key="shade.group">
+            <color-shade :shade="shade"></color-shade>
+          </div>
+        </div>
+        <h3>ANALOGUS</h3>
+        <div
+          class="color-shades"
+          v-for="analogus in color.analogus"
+          v-bind:key="analogus.id">
+          <color-shade
+            v-for="shade in analogus.shades"
+            v-bind:key="shade.group"
+            :shade="shade">
+          </color-shade>
+        </div>
+        <h3>COMPLEMENTARY</h3>
+        <div class="color-shades">
+          <div
+            v-for="shade in color.complementary.shades"
+            v-bind:key="shade.group">
+            <color-shade :shade="shade"></color-shade>
+          </div>
+        </div>
+        <h3>TRIADIC</h3>
+        <div
+          class="color-shades"
+          v-for="triadic in color.triadic"
+          v-bind:key="triadic.id">
+          <color-shade
+            v-for="shade in triadic.shades"
+            v-bind:key="shade.group"
+            :shade="shade">
+          </color-shade>
+        </div>
       </div>
     </div>
   `;
 
-  Vue.component('color-definition', {
-    template,
-    props: ['color']
-  });
-})(Vue);
+  const props = ['initialColor'];
+
+  const getColorScale = (hex) => {
+    const shades = paletteGenerator.default.getPalette(hex);
+
+    return Object.keys(shades).reverse().map((key) => shades[key]);
+  };
+  const addShades = (color) => {
+    if (color && color.hex) {
+      if (color.hex.length === 7) {
+        color.shades = getColorScale(color.hex);
+
+        const similarColors = paletteGenerator.default.getSimilar(color.hex);
+
+        color.analogus = similarColors.analogus.map((analogus) => ({
+          id: rodu.generateId(),
+          shades: getColorScale(analogus.hex)
+        }));
+
+        color.complementary = {
+          id: rodu.generateId(),
+          shades: getColorScale(similarColors.complementary.hex)
+        };
+
+        color.triadic = similarColors.triadic.map((triadic) => ({
+          id: rodu.generateId(),
+          shades: getColorScale(triadic.hex)
+        }));
+      }
+    }
+
+    return color;
+  };
+
+  const data = function() {
+    return {
+      color: addShades(this.initialColor)
+    };
+  };
+
+  const methods = {
+    onColorChange: function() {
+      addShades(this.color);
+    }
+  };
+
+  Vue.component('color-definition', { template, props, data, methods });
+})(Vue, rodu, paletteGenerator);

@@ -1,6 +1,25 @@
 [v-cloak] { display:none; }
 
 .color-box {
+  width: 150px;
+  height: 150px;
+}
+
+.color-shades {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+  max-width: 1200px;
+}
+
+.color-shades .color-data {
+  padding: 20px;
+  color: #888;
+  font-family: monospace, "Andale Mono";
+}
+
+.color-shades .shade-box {
   width: 100px;
   height: 100px;
+  align-self: center;
 }

@@ -1,10 +1,8 @@
-(function paletteGenerator(Vue){
+(function paletteGenerator(Vue, rodu){
   'use strict';
 
-  const generateId = () => {
-    return (+new Date() + Math.floor(Math.random() * 999999)).toString(16);
-  };
-  const makeColor = (name = '', hex = '') => ({ name, hex, id: generateId() });
+  const makeColor =
+    (name = '', hex = '') => ({ name, hex, id: rodu.generateId() });
 
   const getStoredColors = () => {
     const storedColors = localStorage.getItem('colors');
@@ -40,4 +38,4 @@
     data,
     methods,
   });
-}(Vue));
+}(Vue, rodu));

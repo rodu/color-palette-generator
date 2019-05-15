@@ -23,8 +23,8 @@
               <h2>Colors</h2>
               <color-definition
                 v-for="color in colors"
-                v-bind:key="color.id"
-                v-bind:color="color">
+                :key="color.id"
+                :initial-color="color">
               </color-definition>
               <div class="text-right">
                 <button @click="addColor()" title="Add Colour" class="btn btn-success">+</button>
@@ -35,8 +35,13 @@
         </div>
       </main>
 
+      <script src="lib/lodash.min.js"></script>
+      <script src="lib/palette-generator.js"></script>
       <script src="lib/vue.js"></script>
 
+      <script src="js/rodu.js"></script>
+      <script src="js/utils/generate-id.js"></script>
+      <script src="js/components/color-shade.js"></script>
       <script src="js/components/color-definition.js"></script>
       <script src="js/main.js"></script>
     </body>
