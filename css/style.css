@@ -3,17 +3,17 @@
 .color-box {
   width: 150px;
   height: 150px;
+  margin: 40px 0;
 }
 
 .color-shades {
   display: flex;
-  justify-content: space-around;
   margin: 10px 0;
   max-width: 1200px;
 }
 
 .color-shades .color-data {
-  padding: 20px;
+  padding: 20px 0;
   color: #888;
   font-family: monospace, "Andale Mono";
 }

@@ -20,11 +20,14 @@
       <div class="col-md-10">
         <h2 v-if="color.name">{{color.name}}</h2>
         <div class="color-box" :style="{backgroundColor: color.hex}"></div>
-        <div class="color-shades">
-          <div
-            v-for="shade in color.shades"
-            v-bind:key="shade.group">
-            <color-shade :shade="shade"></color-shade>
+        <div v-if="color.primary">
+          <h3>PRIMARY</h3>
+          <div class="color-shades">
+            <div
+              v-for="shade in color.primary.shades"
+              v-bind:key="shade.group">
+              <color-shade :shade="shade"></color-shade>
+            </div>
           </div>
         </div>
         <div v-if="color.analogus">
@@ -77,8 +80,6 @@
   const addShades = (color) => {
     if (color && color.hex) {
       if (color.hex.length === 7) {
-        color.shades = getColorScale(color.hex);
-
         const similarColors = paletteGenerator.default.getSimilar(color.hex);
 
         color.analogus = similarColors.analogus.map((analogus) => ({
@@ -89,6 +90,11 @@
         color.complementary = {
           id: rodu.generateId(),
           shades: getColorScale(similarColors.complementary.hex)
+        };
+
+        color.primary = {
+          id: rodu.generateId(),
+          shades: getColorScale(similarColors.primary.hex)
         };
 
         color.triadic = similarColors.triadic.map((triadic) => ({
