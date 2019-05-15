@@ -21,7 +21,7 @@
     addColor() {
       data.colors.push(makeColor());
 
-      save();
+      this.save();
     },
 
     save() {

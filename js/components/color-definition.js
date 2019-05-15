@@ -27,35 +27,41 @@
             <color-shade :shade="shade"></color-shade>
           </div>
         </div>
-        <h3>ANALOGUS</h3>
-        <div
-          class="color-shades"
-          v-for="analogus in color.analogus"
-          v-bind:key="analogus.id">
-          <color-shade
-            v-for="shade in analogus.shades"
-            v-bind:key="shade.group"
-            :shade="shade">
-          </color-shade>
-        </div>
-        <h3>COMPLEMENTARY</h3>
-        <div class="color-shades">
+        <div v-if="color.analogus">
+          <h3>ANALOGUS</h3>
           <div
-            v-for="shade in color.complementary.shades"
-            v-bind:key="shade.group">
-            <color-shade :shade="shade"></color-shade>
+            class="color-shades"
+            v-for="analogus in color.analogus"
+            v-bind:key="analogus.id">
+            <color-shade
+              v-for="shade in analogus.shades"
+              v-bind:key="shade.group"
+              :shade="shade">
+            </color-shade>
           </div>
         </div>
-        <h3>TRIADIC</h3>
-        <div
-          class="color-shades"
-          v-for="triadic in color.triadic"
-          v-bind:key="triadic.id">
-          <color-shade
-            v-for="shade in triadic.shades"
-            v-bind:key="shade.group"
-            :shade="shade">
-          </color-shade>
+        <div v-if="color.complementary">
+          <h3>COMPLEMENTARY</h3>
+          <div class="color-shades">
+            <div
+              v-for="shade in color.complementary.shades"
+              v-bind:key="shade.group">
+              <color-shade :shade="shade"></color-shade>
+            </div>
+          </div>
+        </div>
+        <div v-if="color.triadic">
+          <h3>TRIADIC</h3>
+          <div
+            class="color-shades"
+            v-for="triadic in color.triadic"
+            v-bind:key="triadic.id">
+            <color-shade
+              v-for="shade in triadic.shades"
+              v-bind:key="shade.group"
+              :shade="shade">
+            </color-shade>
+          </div>
         </div>
       </div>
     </div>
