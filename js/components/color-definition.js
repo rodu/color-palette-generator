@@ -13,13 +13,20 @@
           <div class="form-group">
             <label>Hex Value
               <input type="text" class="form-control" v-model="color.hex" @input="onColorChange()">
+              <div class="color-box" :style="{backgroundColor: color.hex}"></div>
             </label>
           </div>
         </div>
       </div>
       <div class="col-md-10">
-        <h2 v-if="color.name">{{color.name}}</h2>
-        <div class="color-box" :style="{backgroundColor: color.hex}"></div>
+        <h1 v-if="color.name">{{color.name}}</h1>
+        <div class="color-shades">
+          <div
+            v-for="shade in color.primaries"
+            v-bind:key="shade.id">
+            <color-shade :shade="shade" :skip-marking-primary="true"></color-shade>
+          </div>
+        </div>
         <div v-if="color.primary">
           <h3>PRIMARY</h3>
           <div class="color-shades">
@@ -77,10 +84,30 @@
 
     return Object.keys(shades).reverse().map((key) => shades[key]);
   };
+
+  const isPrimary = (definition) => definition.isPrimary;
+
+  const concatShades = (definitions) => {
+    return definitions.reduce((result, definition) => {
+      return result.concat(definition.shades);
+    }, []);
+  };
+
+  const addShadeId = (shade) => {
+    shade.id = rodu.generateId();
+
+    return shade;
+  };
+
   const addShades = (color) => {
     if (color && color.hex) {
       if (color.hex.length === 7) {
         const similarColors = paletteGenerator.default.getSimilar(color.hex);
+
+        color.primary = {
+          id: rodu.generateId(),
+          shades: getColorScale(similarColors.primary.hex)
+        };
 
         color.analogus = similarColors.analogus.map((analogus) => ({
           id: rodu.generateId(),
@@ -92,15 +119,17 @@
           shades: getColorScale(similarColors.complementary.hex)
         };
 
-        color.primary = {
-          id: rodu.generateId(),
-          shades: getColorScale(similarColors.primary.hex)
-        };
-
         color.triadic = similarColors.triadic.map((triadic) => ({
           id: rodu.generateId(),
           shades: getColorScale(triadic.hex)
         }));
+
+        color.primaries = [
+          ...color.primary.shades.filter(isPrimary),
+          ...concatShades(color.analogus).filter(isPrimary),
+          ...color.complementary.shades.filter(isPrimary),
+          ...concatShades(color.triadic).filter(isPrimary),
+        ].map(addShadeId);
       }
     }
 
