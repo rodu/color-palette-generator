@@ -4,7 +4,7 @@
   const template = `
     <div class="row">
       <div class="col-md-2">
-        <div class="color-definition">
+        <div>
           <div class="form-group">
             <label>Color Name
               <input type="text" class="form-control" v-model="color.name">
@@ -31,7 +31,7 @@
             <color-shade :shade="shade" :skip-marking-primary="true"></color-shade>
           </div>
         </div>
-        <div v-if="color.primary">
+        <div v-if="color.primary" class="color-definition">
           <h3>PRIMARY</h3>
           <div class="color-shades">
             <div
@@ -41,7 +41,7 @@
             </div>
           </div>
         </div>
-        <div v-if="color.analogus">
+        <div v-if="color.analogus" class="color-definition">
           <h3>ANALOGUS</h3>
           <div class="color-shades">
             <div
@@ -51,7 +51,7 @@
             </div>
           </div>
         </div>
-        <div v-if="color.complementary">
+        <div v-if="color.complementary" class="color-definition">
           <h3>COMPLEMENTARY</h3>
           <div class="color-shades">
             <div
@@ -61,7 +61,7 @@
             </div>
           </div>
         </div>
-        <div v-if="color.triadic">
+        <div v-if="color.triadic" class="color-definition">
           <h3>TRIADIC</h3>
           <div class="color-shades">
             <div
@@ -148,8 +148,12 @@
 
   const mounted = function() {
     // Initializes the color picker
-    const holder = document.getElementById('color-box');
-    const picker = new Picker(holder);
+    const parent = document.getElementById('color-box');
+    const picker = new Picker({
+      parent,
+      color: this.color.hex,
+      alpha: false
+    });
 
     picker.onChange = (color) => {
       this.color.hex = color.hex.substring(0, 7);
