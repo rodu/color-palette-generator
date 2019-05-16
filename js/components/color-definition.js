@@ -36,78 +36,30 @@
             <color-shade :shade="shade" :skip-marking-primary="true"></color-shade>
           </div>
         </div>
-        <div v-if="color.primary" class="color-definition">
-          <h3>PRIMARY</h3>
-          <div class="color-shades">
-            <div
-              v-for="shade in color.primary.shades"
-              v-bind:key="shade.group">
-              <color-shade :shade="shade"></color-shade>
-            </div>
-          </div>
-          <div class="color-variables" v-if="showVariables">
-            <h3>SASS variables</h3>
-            <p
-              v-for="variable in color.primary.variables"
-              v-bind:key="variable.id">
-              {{variable.value}}
-            </p>
-          </div>
-        </div>
-        <div v-if="color.analogus" class="color-definition">
-          <h3>ANALOGUS</h3>
-          <div class="color-shades">
-            <div
-              v-for="shade in color.analogus.shades"
-              v-bind:key="shade.group">
-              <color-shade :shade="shade"></color-shade>
-            </div>
-          </div>
-          <div class="color-variables" v-if="showVariables">
-            <h3>SASS variables</h3>
-            <p
-              v-for="variable in color.analogus.variables"
-              v-bind:key="variable.id">
-              {{variable.value}}
-            </p>
-          </div>
-        </div>
-        <div v-if="color.complementary" class="color-definition">
-          <h3>COMPLEMENTARY</h3>
-          <div class="color-shades">
-            <div
-              v-for="shade in color.complementary.shades"
-              v-bind:key="shade.group">
-              <color-shade :shade="shade"></color-shade>
-            </div>
-          </div>
-          <div class="color-variables" v-if="showVariables">
-            <h3>SASS variables</h3>
-            <p
-              v-for="variable in color.complementary.variables"
-              v-bind:key="variable.id">
-              {{variable.value}}
-            </p>
-          </div>
-        </div>
-        <div v-if="color.triadic" class="color-definition">
-          <h3>TRIADIC</h3>
-          <div class="color-shades">
-            <div
-              v-for="shade in color.triadic.shades"
-              v-bind:key="shade.group">
-              <color-shade :shade="shade"></color-shade>
-            </div>
-          </div>
-          <div class="color-variables" v-if="showVariables">
-            <h3>SASS variables</h3>
-            <p
-              v-for="variable in color.triadic.variables"
-              v-bind:key="variable.id">
-              {{variable.value}}
-            </p>
-          </div>
-        </div>
+        <color-item
+          v-if="color.primary"
+          :definition="color.primary"
+          :showVariables="showVariables"
+          title="PRIMARY">
+        </color-item>
+        <color-item
+          v-if="color.analogus"
+          :definition="color.analogus"
+          :showVariables="showVariables"
+          title="ANALOGUS">
+        </color-item>
+        <color-item
+          v-if="color.complementary"
+          :definition="color.complementary"
+          :showVariables="showVariables"
+          title="COMPLEMENTARY">
+        </color-item>
+        <color-item
+          v-if="color.triadic"
+          :definition="color.triadic"
+          :showVariables="showVariables"
+          title="TRIADIC">
+        </color-item>
       </div>
     </div>
   `;
