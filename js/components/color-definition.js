@@ -13,7 +13,7 @@
           <div class="form-group">
             <label>Hex Value
               <input type="text" class="form-control" v-model="color.hex" @input="onColorChange()">
-              <div class="color-box" :style="{backgroundColor: color.hex}"></div>
+              <div id="color-box" class="color-box" :style="{backgroundColor: color.hex}"></div>
             </label>
           </div>
         </div>
@@ -142,5 +142,22 @@
     }
   };
 
-  Vue.component('color-definition', { template, props, data, methods });
+  const mounted = function() {
+    // Initializes the color picker
+    const holder = document.getElementById('color-box');
+    const picker = new Picker(holder);
+
+    picker.onChange = (color) => {
+      this.color.hex = color.hex.substring(0, 7);
+    };
+  };
+
+  const created = function() {
+    this.$watch('color.hex', _.debounce(() => this.onColorChange(), 500));
+  };
+
+  Vue.component(
+    'color-definition',
+    { template, props, data, methods, mounted, created }
+  );
 })(Vue, rodu, paletteGenerator);
