@@ -95,7 +95,7 @@
 
   const addShades = (color) => {
     if (color && color.hex) {
-      if (color.hex.length === 7) {
+      if (color.hex.match(/^#[a-f0-9]{6}$/i)) {
         const similarColors = paletteGenerator.default.getSimilar(color.hex);
 
         const primaryShades = getColorScale(similarColors.primary.hex);
