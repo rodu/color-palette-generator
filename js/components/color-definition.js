@@ -101,7 +101,7 @@
       color.primary = {
         id: rodu.generateId(),
         shades: primaryShades,
-        variables: primaryShades
+        variables: [...primaryShades]
           .reverse()
           .map(scaleToVariables, { name: 'primary' })
       };
@@ -110,7 +110,7 @@
       color.analogus = {
         id: rodu.generateId(),
         shades: analogusShades,
-        variables: analogusShades
+        variables: [...analogusShades]
           .reverse()
           .map(scaleToVariables, { name: 'analogus' })
       };
@@ -120,7 +120,7 @@
       color.complementary = {
         id: rodu.generateId(),
         shades: complementaryShades,
-        variables: complementaryShades
+        variables: [...complementaryShades]
           .reverse()
           .map(scaleToVariables, { name: 'complementary' })
       };
@@ -129,7 +129,7 @@
       color.triadic = {
         id: rodu.generateId(),
         shades: triadicShades,
-        variables: triadicShades
+        variables: [...triadicShades]
           .reverse()
           .map(scaleToVariables, { name: 'triadic' })
       };
