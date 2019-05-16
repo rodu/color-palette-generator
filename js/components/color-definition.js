@@ -46,6 +46,7 @@
             </div>
           </div>
           <div class="color-variables" v-if="showVariables">
+            <h3>SASS variables</h3>
             <p
               v-for="variable in color.primary.variables"
               v-bind:key="variable.id">
@@ -63,6 +64,7 @@
             </div>
           </div>
           <div class="color-variables" v-if="showVariables">
+            <h3>SASS variables</h3>
             <p
               v-for="variable in color.analogus.variables"
               v-bind:key="variable.id">
@@ -80,6 +82,7 @@
             </div>
           </div>
           <div class="color-variables" v-if="showVariables">
+            <h3>SASS variables</h3>
             <p
               v-for="variable in color.complementary.variables"
               v-bind:key="variable.id">
@@ -97,6 +100,7 @@
             </div>
           </div>
           <div class="color-variables" v-if="showVariables">
+            <h3>SASS variables</h3>
             <p
               v-for="variable in color.triadic.variables"
               v-bind:key="variable.id">
