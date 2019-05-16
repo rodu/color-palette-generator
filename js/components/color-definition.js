@@ -39,15 +39,12 @@
         </div>
         <div v-if="color.analogus">
           <h3>ANALOGUS</h3>
-          <div
-            class="color-shades"
-            v-for="analogus in color.analogus"
-            v-bind:key="analogus.id">
-            <color-shade
-              v-for="shade in analogus.shades"
-              v-bind:key="shade.group"
-              :shade="shade">
-            </color-shade>
+          <div class="color-shades">
+            <div
+              v-for="shade in color.analogus.shades"
+              v-bind:key="shade.group">
+              <color-shade :shade="shade"></color-shade>
+            </div>
           </div>
         </div>
         <div v-if="color.complementary">
@@ -62,15 +59,12 @@
         </div>
         <div v-if="color.triadic">
           <h3>TRIADIC</h3>
-          <div
-            class="color-shades"
-            v-for="triadic in color.triadic"
-            v-bind:key="triadic.id">
-            <color-shade
-              v-for="shade in triadic.shades"
-              v-bind:key="shade.group"
-              :shade="shade">
-            </color-shade>
+          <div class="color-shades">
+            <div
+              v-for="shade in color.triadic.shades"
+              v-bind:key="shade.group">
+              <color-shade :shade="shade"></color-shade>
+            </div>
           </div>
         </div>
       </div>
@@ -109,26 +103,26 @@
           shades: getColorScale(similarColors.primary.hex)
         };
 
-        color.analogus = similarColors.analogus.map((analogus) => ({
+        color.analogus = {
           id: rodu.generateId(),
-          shades: getColorScale(analogus.hex)
-        }));
+          shades: getColorScale(similarColors.analogus[0].hex)
+        };
 
         color.complementary = {
           id: rodu.generateId(),
           shades: getColorScale(similarColors.complementary.hex)
         };
 
-        color.triadic = similarColors.triadic.map((triadic) => ({
+        color.triadic = {
           id: rodu.generateId(),
-          shades: getColorScale(triadic.hex)
-        }));
+          shades: getColorScale(similarColors.triadic[0].hex)
+        };
 
         color.primaries = [
-          ...color.primary.shades.filter(isPrimary),
-          ...concatShades(color.analogus).filter(isPrimary),
-          ...color.complementary.shades.filter(isPrimary),
-          ...concatShades(color.triadic).filter(isPrimary),
+          color.primary.shades.find(isPrimary),
+          color.analogus.shades.find(isPrimary),
+          color.complementary.shades.find(isPrimary),
+          color.triadic.shades.find(isPrimary),
         ].map(addShadeId);
       }
     }
