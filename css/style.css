@@ -11,6 +11,17 @@
   margin: 60px 0;
 }
 
+.color-variables {
+  line-height: 12px;
+  color: #444;
+  margin: 10px;
+  padding: 20px;
+  background-color: #eee;
+  font-family: monospace;
+  border: solid 1px #ddd;
+  width: 400px;
+}
+
 .color-shades {
   display: flex;
   margin: 10px 0;

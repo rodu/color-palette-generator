@@ -17,6 +17,11 @@
             </label>
           </div>
           <div>
+            <label>Show SASS variables
+              <input type="checkbox" @input="onShowVariablesChange()">
+            </label>
+          </div>
+          <div>
             <!-- button @click="addColor()" title="Add Colour" class="btn btn-success">+</button -->
             <button @click="save()" class="btn btn-primary">Save</button>
           </div>
@@ -40,6 +45,13 @@
               <color-shade :shade="shade"></color-shade>
             </div>
           </div>
+          <div class="color-variables" v-if="showVariables">
+            <p
+              v-for="variable in color.primary.variables"
+              v-bind:key="variable.id">
+              {{variable.value}}
+            </p>
+          </div>
         </div>
         <div v-if="color.analogus" class="color-definition">
           <h3>ANALOGUS</h3>
@@ -49,6 +61,13 @@
               v-bind:key="shade.group">
               <color-shade :shade="shade"></color-shade>
             </div>
+          </div>
+          <div class="color-variables" v-if="showVariables">
+            <p
+              v-for="variable in color.analogus.variables"
+              v-bind:key="variable.id">
+              {{variable.value}}
+            </p>
           </div>
         </div>
         <div v-if="color.complementary" class="color-definition">
@@ -60,6 +79,13 @@
               <color-shade :shade="shade"></color-shade>
             </div>
           </div>
+          <div class="color-variables" v-if="showVariables">
+            <p
+              v-for="variable in color.complementary.variables"
+              v-bind:key="variable.id">
+              {{variable.value}}
+            </p>
+          </div>
         </div>
         <div v-if="color.triadic" class="color-definition">
           <h3>TRIADIC</h3>
@@ -69,6 +95,13 @@
               v-bind:key="shade.group">
               <color-shade :shade="shade"></color-shade>
             </div>
+          </div>
+          <div class="color-variables" v-if="showVariables">
+            <p
+              v-for="variable in color.triadic.variables"
+              v-bind:key="variable.id">
+              {{variable.value}}
+            </p>
           </div>
         </div>
       </div>
@@ -97,29 +130,53 @@
     return shade;
   };
 
+  const scaleToVariables = function(shade) {
+    return {
+      id: rodu.generateId(),
+      value: `$${this.name}-${shade.group}: ${shade.hex};`
+    };
+  };
+
   const addShades = (color) => {
     if (color && color.hex) {
       if (color.hex.length === 7) {
         const similarColors = paletteGenerator.default.getSimilar(color.hex);
 
+        const primaryShades = getColorScale(similarColors.primary.hex);
         color.primary = {
           id: rodu.generateId(),
-          shades: getColorScale(similarColors.primary.hex)
+          shades: primaryShades,
+          variables: primaryShades
+            .reverse()
+            .map(scaleToVariables, { name: 'primary' })
         };
 
+        const analogusShades = getColorScale(similarColors.analogus[0].hex);
         color.analogus = {
           id: rodu.generateId(),
-          shades: getColorScale(similarColors.analogus[0].hex)
+          shades: analogusShades,
+          variables: analogusShades
+            .reverse()
+            .map(scaleToVariables, { name: 'analogus' })
         };
 
+        const complementaryShades =
+          getColorScale(similarColors.complementary.hex);
         color.complementary = {
           id: rodu.generateId(),
-          shades: getColorScale(similarColors.complementary.hex)
+          shades: complementaryShades,
+          variables: complementaryShades
+            .reverse()
+            .map(scaleToVariables, { name: 'complementary' })
         };
 
+        const triadicShades = getColorScale(similarColors.triadic[0].hex);
         color.triadic = {
           id: rodu.generateId(),
-          shades: getColorScale(similarColors.triadic[0].hex)
+          shades: triadicShades,
+          variables: triadicShades
+            .reverse()
+            .map(scaleToVariables, { name: 'triadic' })
         };
 
         color.primaries = [
@@ -136,13 +193,17 @@
 
   const data = function() {
     return {
-      color: addShades(this.initialColor)
+      color: addShades(this.initialColor),
+      showVariables: false
     };
   };
 
   const methods = {
     onColorChange: function() {
       addShades(this.color);
+    },
+    onShowVariablesChange: function() {
+      this.showVariables = !Boolean(this.showVariables);
     }
   };
 
