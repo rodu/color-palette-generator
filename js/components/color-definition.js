@@ -94,54 +94,52 @@
   };
 
   const addShades = (color) => {
-    if (color && color.hex) {
-      if (color.hex.match(/^#[a-f0-9]{6}$/i)) {
-        const similarColors = paletteGenerator.default.getSimilar(color.hex);
+    if (color && color.hex && color.hex.match(/^#[a-f0-9]{6}$/i)) {
+      const similarColors = paletteGenerator.default.getSimilar(color.hex);
 
-        const primaryShades = getColorScale(similarColors.primary.hex);
-        color.primary = {
-          id: rodu.generateId(),
-          shades: primaryShades,
-          variables: primaryShades
-            .reverse()
-            .map(scaleToVariables, { name: 'primary' })
-        };
+      const primaryShades = getColorScale(similarColors.primary.hex);
+      color.primary = {
+        id: rodu.generateId(),
+        shades: primaryShades,
+        variables: primaryShades
+          .reverse()
+          .map(scaleToVariables, { name: 'primary' })
+      };
 
-        const analogusShades = getColorScale(similarColors.analogus[0].hex);
-        color.analogus = {
-          id: rodu.generateId(),
-          shades: analogusShades,
-          variables: analogusShades
-            .reverse()
-            .map(scaleToVariables, { name: 'analogus' })
-        };
+      const analogusShades = getColorScale(similarColors.analogus[0].hex);
+      color.analogus = {
+        id: rodu.generateId(),
+        shades: analogusShades,
+        variables: analogusShades
+          .reverse()
+          .map(scaleToVariables, { name: 'analogus' })
+      };
 
-        const complementaryShades =
-          getColorScale(similarColors.complementary.hex);
-        color.complementary = {
-          id: rodu.generateId(),
-          shades: complementaryShades,
-          variables: complementaryShades
-            .reverse()
-            .map(scaleToVariables, { name: 'complementary' })
-        };
+      const complementaryShades =
+        getColorScale(similarColors.complementary.hex);
+      color.complementary = {
+        id: rodu.generateId(),
+        shades: complementaryShades,
+        variables: complementaryShades
+          .reverse()
+          .map(scaleToVariables, { name: 'complementary' })
+      };
 
-        const triadicShades = getColorScale(similarColors.triadic[0].hex);
-        color.triadic = {
-          id: rodu.generateId(),
-          shades: triadicShades,
-          variables: triadicShades
-            .reverse()
-            .map(scaleToVariables, { name: 'triadic' })
-        };
+      const triadicShades = getColorScale(similarColors.triadic[0].hex);
+      color.triadic = {
+        id: rodu.generateId(),
+        shades: triadicShades,
+        variables: triadicShades
+          .reverse()
+          .map(scaleToVariables, { name: 'triadic' })
+      };
 
-        color.primaries = [
-          color.primary.shades.find(isPrimary),
-          color.analogus.shades.find(isPrimary),
-          color.complementary.shades.find(isPrimary),
-          color.triadic.shades.find(isPrimary),
-        ].map(addShadeId);
-      }
+      color.primaries = [
+        color.primary.shades.find(isPrimary),
+        color.analogus.shades.find(isPrimary),
+        color.complementary.shades.find(isPrimary),
+        color.triadic.shades.find(isPrimary),
+      ].map(addShadeId);
     }
 
     return color;
