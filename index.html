@@ -24,12 +24,9 @@
               <color-definition
                 v-for="color in colors"
                 :key="color.id"
+                :save="save"
                 :initial-color="color">
               </color-definition>
-              <div class="text-right">
-                <button @click="addColor()" title="Add Colour" class="btn btn-success">+</button>
-                <button @click="save()" class="btn btn-primary">Save</button>
-              </div>
             </form>
           </div>
         </div>

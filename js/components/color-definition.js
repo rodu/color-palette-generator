@@ -16,6 +16,10 @@
               <div id="color-box" class="color-box" :style="{backgroundColor: color.hex}"></div>
             </label>
           </div>
+          <div>
+            <!-- button @click="addColor()" title="Add Colour" class="btn btn-success">+</button -->
+            <button @click="save()" class="btn btn-primary">Save</button>
+          </div>
         </div>
       </div>
       <div class="col-md-10">
@@ -71,7 +75,7 @@
     </div>
   `;
 
-  const props = ['initialColor'];
+  const props = ['initialColor', 'save'];
 
   const getColorScale = (hex) => {
     const shades = paletteGenerator.default.getPalette(hex);
