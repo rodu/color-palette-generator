@@ -5,19 +5,21 @@
     (name = '', hex = '') => ({ name, hex, id: rodu.generateId() });
 
   const getStoredColors = () => {
-    const storedColors = localStorage.getItem('colors');
-
-    if (storedColors) {
-      return JSON.parse(storedColors);
-    }
-
-    return [makeColor()];
+    return rodu.storage.getItem('colors') || [makeColor()];
   };
+
   const data = {
-    colors: getStoredColors()
+    colors: getStoredColors(),
+    colorInput: {},
+    showVariables: false
   };
 
   const methods = {
+    /*
+    onShowVariablesChange() {
+      this.showVariables = !Boolean(this.showVariables);
+    },*/
+
     addColor() {
       data.colors.push(makeColor());
 
@@ -25,7 +27,7 @@
     },
 
     save() {
-      localStorage.setItem('colors', JSON.stringify(data.colors));
+      rodu.storage.setItem('colors', getStoredColors().concat(data.colors));
     },
 
     onSubmit(event) {
@@ -33,9 +35,26 @@
     }
   };
 
+  const mounted = function() {
+    // Initializes the color picker
+    const parent = document.getElementById('color-box');
+    const picker = new Picker({
+      parent,
+      color: this.colorInput.hex,
+      alpha: false
+    });
+
+    picker.onChange = (color) => {
+      this.colorInput = Object.assign({}, color, {
+        hex: color.hex.substring(0, 7)
+      });
+    };
+  };
+
   const app = new Vue({
     el: '#app',
     data,
     methods,
+    mounted,
   });
 }(Vue, rodu));

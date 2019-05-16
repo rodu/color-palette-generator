@@ -13,21 +13,37 @@
       <main id="app" class="container-fluid" v-cloak>
         <h1>Color Palette Generator</h1>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-2">
             <form @submit="onSubmit($event)">
+              <h2>Colors</h2>
               <div class="form-group">
-                <label>Palette name
-                  <input type="text" class="form-control">
+                <label>Color Name
+                  <input type="text" class="form-control" v-model="colorInput.name">
                 </label>
               </div>
-              <h2>Colors</h2>
-              <color-definition
-                v-for="color in colors"
-                :key="color.id"
-                :save="save"
-                :initial-color="color">
-              </color-definition>
+              <div class="form-group">
+                <label>Hex Value
+                  <input type="text" class="form-control" v-model="colorInput.hex">
+                  <div id="color-box" class="color-box" :style="{backgroundColor: colorInput.hex}"></div>
+                </label>
+              </div>
+              <div>
+                <label>SASS variables
+                  <input type="checkbox" v-model="showVariables">
+                </label>
+              </div>
+              <div>
+                <!-- button @click="addColor()" title="Add Colour" class="btn btn-success">+</button -->
+                <button @click="save()" class="btn btn-primary">Save</button>
+              </div>
             </form>
+          </div>
+          <div class="col-md-10">
+            <color-definition
+              :show-variables="showVariables"
+              :save="save"
+              :color-input="colorInput">
+            </color-definition>
           </div>
         </div>
       </main>
@@ -39,6 +55,7 @@
 
       <script src="js/rodu.js"></script>
       <script src="js/utils/generate-id.js"></script>
+      <script src="js/utils/storage.js"></script>
       <script src="js/components/color-shade.js"></script>
       <script src="js/components/color-item.js"></script>
       <script src="js/components/color-definition.js"></script>

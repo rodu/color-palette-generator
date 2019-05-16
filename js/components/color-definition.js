@@ -3,31 +3,7 @@
 
   const template = `
     <div class="row">
-      <div class="col-md-2">
-        <div>
-          <div class="form-group">
-            <label>Color Name
-              <input type="text" class="form-control" v-model="color.name">
-            </label>
-          </div>
-          <div class="form-group">
-            <label>Hex Value
-              <input type="text" class="form-control" v-model="color.hex" @input="onColorChange()">
-              <div id="color-box" class="color-box" :style="{backgroundColor: color.hex}"></div>
-            </label>
-          </div>
-          <div>
-            <label>Show SASS variables
-              <input type="checkbox" @input="onShowVariablesChange()">
-            </label>
-          </div>
-          <div>
-            <!-- button @click="addColor()" title="Add Colour" class="btn btn-success">+</button -->
-            <button @click="save()" class="btn btn-primary">Save</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-10">
+      <div class="col-md-12">
         <h1 v-if="color.name">{{color.name}}</h1>
         <div class="color-shades">
           <div
@@ -64,7 +40,7 @@
     </div>
   `;
 
-  const props = ['initialColor', 'save'];
+  const props = ['colorInput', 'showVariables', 'save'];
 
   const getColorScale = (hex) => {
     const shades = paletteGenerator.default.getPalette(hex);
@@ -147,40 +123,30 @@
 
   const data = function() {
     return {
-      color: addShades(this.initialColor),
-      showVariables: false
+      color: addShades(this.colorInput),
     };
   };
 
   const methods = {
-    onColorChange: function() {
+    onColorChange() {
       addShades(this.color);
-    },
-    onShowVariablesChange: function() {
-      this.showVariables = !Boolean(this.showVariables);
     }
   };
 
-  const mounted = function() {
-    // Initializes the color picker
-    const parent = document.getElementById('color-box');
-    const picker = new Picker({
-      parent,
-      color: this.color.hex,
-      alpha: false
-    });
-
-    picker.onChange = (color) => {
-      this.color.hex = color.hex.substring(0, 7);
-    };
-  };
-
   const created = function() {
-    this.$watch('color.hex', _.debounce(() => this.onColorChange(), 500));
+    this.$watch('colorInput', _.debounce((colorInput) => {
+      this.color = colorInput;
+
+      this.onColorChange();
+    }, 500));
   };
 
-  Vue.component(
-    'color-definition',
-    { template, props, data, methods, mounted, created }
+  Vue.component('color-definition', {
+    template,
+    props,
+    data,
+    methods,
+    created
+  }
   );
 })(Vue, rodu, paletteGenerator);
