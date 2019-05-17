@@ -30,6 +30,10 @@
       rodu.storage.setItem('colors', getStoredColors().concat(data.colors));
     },
 
+    print() {
+      window.print();
+    },
+
     onSubmit(event) {
       event.preventDefault();
     }

@@ -15,7 +15,7 @@
           </color-shade>
         </div>
       </div>
-      <div class="color-variables" v-if="showVariables">
+      <div class="color-variables screen-only" v-if="showVariables">
         <h3>SASS variables</h3>
         <p
           v-for="variable in definition.variables"

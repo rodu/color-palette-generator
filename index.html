@@ -14,9 +14,8 @@
       <main id="app" class="container-fluid" v-cloak>
         <h1>Color Palette Generator</h1>
         <div class="row palette-generator">
-          <div class="col-md-2">
+          <div class="col-md-2 screen-only">
             <form @submit="onSubmit($event)">
-              <h2>Colors</h2>
               <div class="form-group">
                 <label>Color Name
                   <input type="text" class="form-control" v-model="colorInput.name">
@@ -46,10 +45,16 @@
                   title="Save Color">
                   <i class="fas fa-plus"></i>
                 </button>
+                <button
+                  @click="print()"
+                  class="btn btn-dark"
+                  title="Print Palette">
+                  <i class="fas fa-print"></i>
+                </button>
               </div>
             </form>
           </div>
-          <div class="col-md-10">
+          <div class="col-md-10 print-wide">
             <color-definition
               :show-variables="showVariables"
               :save="save"
