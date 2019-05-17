@@ -1,1 +1,0 @@
-window.rodu = window.rodu || {};
