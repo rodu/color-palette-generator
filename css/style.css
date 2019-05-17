@@ -1,14 +1,34 @@
 [v-cloak] { display:none; }
 
+.palette-generator {
+  margin-top: 50px;
+}
+
 .color-box {
   width: 50px;
   height: 50px;
   margin: 10px 0;
   cursor: pointer;
+  border: solid 1px #888;
+  border-radius: 4px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-.color-definition {
+.color-box i {
+  color: #888;
+}
+
+.color-definition {}
+
+.color-item {
   margin: 60px 0;
+}
+
+.color-name {
+  height: 60px;
 }
 
 .color-variables {
@@ -58,4 +78,14 @@
   background-color:#444;
   border: solid 1px #fff;
   border-radius: 50%;
+}
+
+.color-shades .shade-box.first {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.color-shades .shade-box.last {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }

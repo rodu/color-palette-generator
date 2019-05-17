@@ -2,13 +2,17 @@
   'use strict';
 
   const template = `
-    <div class="color-definition">
+    <div class="color-item">
       <h3>{{title}}</h3>
       <div class="color-shades">
         <div
-          v-for="shade in definition.shades"
+          v-for="(shade, index) in definition.shades"
           v-bind:key="shade.group">
-          <color-shade :shade="shade"></color-shade>
+          <color-shade
+            :index="index"
+            :count="definition.shades.length"
+            :shade="shade">
+          </color-shade>
         </div>
       </div>
       <div class="color-variables" v-if="showVariables">

@@ -2,14 +2,19 @@
   'use strict';
 
   const template = `
-    <div class="row">
+    <div class="row color-definition">
       <div class="col-md-12">
-        <h1 v-if="color.name">{{color.name}}</h1>
+        <h1 class="color-name">{{color.name}}</h1>
         <div class="color-shades">
           <div
-            v-for="shade in color.primaries"
+            v-for="(shade, index) in color.primaries"
             v-bind:key="shade.id">
-            <color-shade :shade="shade" :skip-marking-primary="true"></color-shade>
+            <color-shade
+              :shade="shade"
+              :index="index"
+              :count="color.primaries.length"
+              :skip-marking-primary="true">
+            </color-shade>
           </div>
         </div>
         <color-item

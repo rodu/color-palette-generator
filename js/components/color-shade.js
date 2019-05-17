@@ -4,7 +4,7 @@
   const template = `
     <div>
       <div v-if="!skipMarkingPrimary" class="color-data text-center">{{shade.group}}</div>
-      <div :style="{backgroundColor: shade.hex}" class="shade-box">
+      <div :style="{backgroundColor: shade.hex}" class="shade-box" :class="{first, last}">
         <div
           title="Primary"
           v-if="!skipMarkingPrimary && shade.isPrimary"
@@ -15,7 +15,21 @@
     </div>
   `;
 
-  const props = ['shade', 'skipMarkingPrimary'];
+  const props = ['shade', 'index', 'count', 'skipMarkingPrimary'];
 
-  Vue.component('color-shade', { template, props, /* data, methods*/ });
+  const computed = {
+    first(){
+      return 0 === this.index;
+    },
+
+    last(){
+      return this.count - 1 === this.index;
+    }
+  };
+
+  Vue.component('color-shade', {
+    template,
+    props,
+    computed,
+  });
 })(Vue);
