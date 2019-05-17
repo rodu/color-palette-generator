@@ -7,24 +7,31 @@ const makeColor =
   (name = '', hex = '') => ({ name, hex, id: generateId() });
 
 const getStoredColors = () => {
-  return storage.getItem('colors') || [makeColor()];
+  return storage.getItem('colors') || [];
 };
 
 const data = {
-  colors: getStoredColors(),
   colorInput: {},
-  showVariables: false
+  showVariables: false,
+  storedColors: []
 };
 
 const methods = {
-  addColor() {
-    data.colors.push(makeColor());
-
-    this.save();
-  },
-
   save() {
-    storage.setItem('colors', getStoredColors().concat(data.colors));
+    const { name, hex } = this.colorInput;
+
+    const colorExists = this.storedColors.find((color) => {
+      return color.name === name || color.hex === hex;
+    });
+
+    if (colorExists) {
+      //TODO: Give message to user for existing color!
+      return;
+    }
+
+    this.storedColors.push({ name, hex });
+
+    storage.setItem('colors', this.storedColors);
   },
 
   print() {
@@ -34,6 +41,10 @@ const methods = {
   onSubmit(event) {
     event.preventDefault();
   }
+};
+
+const created = function() {
+  this.storedColors = getStoredColors();
 };
 
 const mounted = function() {
@@ -56,6 +67,7 @@ const app = new Vue({
   el: '#app',
   data,
   methods,
+  created,
   mounted,
 });
 
