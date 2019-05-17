@@ -90,6 +90,10 @@
   border-bottom-right-radius: 4px;
 }
 
+.btn-discard-palette {
+  padding: 0px 6px;
+}
+
 @media screen {
   .screen-only { display: inherit; }
   .print-only { display: none; }
