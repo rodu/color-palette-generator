@@ -15,11 +15,6 @@
   };
 
   const methods = {
-    /*
-    onShowVariablesChange() {
-      this.showVariables = !Boolean(this.showVariables);
-    },*/
-
     addColor() {
       data.colors.push(makeColor());
 
@@ -49,7 +44,7 @@
     });
 
     picker.onChange = (color) => {
-      this.colorInput = Object.assign({}, color, {
+      this.colorInput = Object.assign({}, this.colorInput, color, {
         hex: color.hex.substring(0, 7)
       });
     };
