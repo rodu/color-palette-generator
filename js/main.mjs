@@ -38,6 +38,10 @@ const methods = {
     window.print();
   },
 
+  restore(palette) {
+    this.colorInput = Object.assign({}, palette);
+  },
+
   onSubmit(event) {
     event.preventDefault();
   }

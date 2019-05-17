@@ -58,7 +58,11 @@
                 <ul>
                   <li v-for="palette in storedColors">
                     <span>{{palette.name}}</span>
-                    <div class="color-box":style="{backgroundColor: palette.hex}"></div>
+                    <div
+                      @click="restore(palette)"
+                      class="color-box"
+                      :style="{backgroundColor: palette.hex}">
+                    </div>
                   </li>
                 </ul>
               </div>
