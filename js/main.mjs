@@ -60,6 +60,10 @@ const mounted = function() {
     alpha: false
   });
 
+  picker.onOpen = () => {
+    picker.setColor(this.colorInput.hex + 'FF');
+  };
+
   picker.onChange = (color) => {
     this.colorInput = Object.assign({}, this.colorInput, color, {
       hex: color.hex.substring(0, 7)

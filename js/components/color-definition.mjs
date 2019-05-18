@@ -46,8 +46,6 @@ const template = `
   </div>
 `;
 
-const props = ['colorInput', 'showVariables', 'save'];
-
 const getColorScale = (hex) => {
   const shades = paletteGenerator.default.getPalette(hex);
 
@@ -127,6 +125,8 @@ const addShades = (color) => {
   return color;
 };
 
+const props = ['colorInput', 'showVariables', 'save'];
+
 const data = function() {
   return {
     color: addShades(this.colorInput),
@@ -145,6 +145,12 @@ const created = function() {
 
     this.onColorChange();
   }, 500));
+
+  this.$watch('colorInput.hex', (hex) => {
+    this.color = Object.assign({}, this.color, { hex });
+
+    this.onColorChange();
+  });
 };
 
 Vue.component('color-definition', {
@@ -152,6 +158,5 @@ Vue.component('color-definition', {
   props,
   data,
   methods,
-  created
-}
-);
+  created,
+});
