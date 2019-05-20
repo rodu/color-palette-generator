@@ -74,7 +74,7 @@ const mounted = function() {
   });
 
   picker.onOpen = () => {
-    picker.setColor(this.colorInput.hex + 'FF');
+    picker.setColor(this.colorInput.hex);
   };
 
   picker.onChange = _.debounce((color) => {
