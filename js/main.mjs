@@ -78,8 +78,15 @@ const mounted = function() {
   };
 
   picker.onChange = _.debounce((color) => {
+    const hex = color.hex.substring(0, 7);
+
+    if (hex === this.colorInput.hex) {
+      return;
+    }
+
     this.colorInput = Object.assign({}, this.colorInput, color, {
-      hex: color.hex.substring(0, 7)
+      name: '',
+      hex
     });
   }, 250);
 };
