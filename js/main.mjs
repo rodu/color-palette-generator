@@ -1,6 +1,7 @@
 import { generateId } from './utils/generate-id.mjs';
 import { storage } from './utils/storage.mjs';
 
+import './components/messenger.mjs';
 import './components/color-definition.mjs';
 
 const makeColor =
@@ -13,7 +14,8 @@ const getStoredColors = () => {
 const data = {
   colorInput: {},
   showVariables: false,
-  storedColors: []
+  storedColors: [],
+  message: ''
 };
 
 const methods = {
@@ -25,7 +27,10 @@ const methods = {
     });
 
     if (colorExists) {
-      //TODO: Give message to user for existing color!
+      this.message = {
+        content: 'This palette has already been stored!'
+      };
+
       return;
     }
 
