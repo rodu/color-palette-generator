@@ -22,9 +22,7 @@ const methods = {
   save() {
     const { name, hex } = this.colorInput;
 
-    const colorExists = this.storedColors.find((color) => {
-      return color.name === name || color.hex === hex;
-    });
+    const colorExists = this.storedColors.find((color) => color.hex === hex);
 
     if (colorExists) {
       this.message = {
