@@ -32,7 +32,9 @@ const methods = {
       return;
     }
 
-    this.storedColors.push({ name, hex });
+    const id = generateId();
+
+    this.storedColors.push({ id, name, hex });
 
     storage.setItem('colors', this.storedColors);
   },
@@ -43,6 +45,14 @@ const methods = {
 
   restore(palette) {
     this.colorInput = Object.assign({}, palette);
+  },
+
+  discard(palette) {
+    this.storedColors = this.storedColors.filter((storedColor) => {
+      return storedColor.id !== palette.id;
+    });
+
+    storage.setItem('colors', this.storedColors);
   },
 
   onSubmit(event) {

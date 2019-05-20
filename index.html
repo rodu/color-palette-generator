@@ -65,7 +65,10 @@
                         class="color-box"
                         :style="{backgroundColor: palette.hex}">
                       </div>
-                      <button class="btn btn-danger btn-discard-palette" title="Discard">
+                      <button
+                        @click="discard(palette)"
+                        class="btn btn-danger btn-discard-palette"
+                        title="Discard">
                         <i class="fas fa-times"></i>
                       </button>
                     </div>
