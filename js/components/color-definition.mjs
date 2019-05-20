@@ -140,11 +140,11 @@ const methods = {
 };
 
 const created = function() {
-  this.$watch('colorInput', _.debounce((colorInput) => {
+  this.$watch('colorInput', (colorInput) => {
     this.color = colorInput;
 
     this.onColorChange();
-  }, 500));
+  });
 
   this.$watch('colorInput.hex', (hex) => {
     this.color = Object.assign({}, this.color, { hex });

@@ -77,11 +77,11 @@ const mounted = function() {
     picker.setColor(this.colorInput.hex + 'FF');
   };
 
-  picker.onChange = (color) => {
+  picker.onChange = _.debounce((color) => {
     this.colorInput = Object.assign({}, this.colorInput, color, {
       hex: color.hex.substring(0, 7)
     });
-  };
+  }, 250);
 };
 
 const app = new Vue({
