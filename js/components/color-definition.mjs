@@ -25,22 +25,32 @@ const template = `
         title="PRIMARY">
       </color-item>
       <color-item
-        v-if="color.analogus"
-        :definition="color.analogus"
-        :showVariables="showVariables"
-        title="ANALOGUS">
-      </color-item>
-      <color-item
         v-if="color.complementary"
         :definition="color.complementary"
         :showVariables="showVariables"
         title="COMPLEMENTARY">
       </color-item>
       <color-item
-        v-if="color.triadic"
-        :definition="color.triadic"
+        v-if="color.firstAnalogus"
+        :definition="color.firstAnalogus"
+        :showVariables="showVariables"
+        title="ANALOGUS">
+      </color-item>
+      <color-item
+        v-if="color.secondAnalogus"
+        :definition="color.secondAnalogus"
+        :showVariables="showVariables">
+      </color-item>
+      <color-item
+        v-if="color.firstTriadic"
+        :definition="color.firstTriadic"
         :showVariables="showVariables"
         title="TRIADIC">
+      </color-item>
+      <color-item
+        v-if="color.secondTriadic"
+        :definition="color.secondTriadic"
+        :showVariables="showVariables">
       </color-item>
     </div>
   </div>
@@ -86,15 +96,6 @@ const addShades = (color) => {
         .map(scaleToVariables, { name: 'primary' })
     };
 
-    const analogusShades = getColorScale(similarColors.analogus[0].hex);
-    color.analogus = {
-      id: generateId(),
-      shades: analogusShades,
-      variables: [...analogusShades]
-        .reverse()
-        .map(scaleToVariables, { name: 'analogus' })
-    };
-
     const complementaryShades =
       getColorScale(similarColors.complementary.hex);
     color.complementary = {
@@ -105,8 +106,35 @@ const addShades = (color) => {
         .map(scaleToVariables, { name: 'complementary' })
     };
 
-    const triadicShades = getColorScale(similarColors.triadic[0].hex);
-    color.triadic = {
+    let analogusShades = getColorScale(similarColors.analogus[0].hex);
+    color.firstAnalogus = {
+      id: generateId(),
+      shades: analogusShades,
+      variables: [...analogusShades]
+        .reverse()
+        .map(scaleToVariables, { name: 'analogus' })
+    };
+
+    analogusShades = getColorScale(similarColors.analogus[1].hex);
+    color.secondAnalogus = {
+      id: generateId(),
+      shades: analogusShades,
+      variables: [...analogusShades]
+        .reverse()
+        .map(scaleToVariables, { name: 'analogus' })
+    };
+
+    let triadicShades = getColorScale(similarColors.triadic[0].hex);
+    color.firstTriadic = {
+      id: generateId(),
+      shades: triadicShades,
+      variables: [...triadicShades]
+        .reverse()
+        .map(scaleToVariables, { name: 'triadic' })
+    };
+
+    triadicShades = getColorScale(similarColors.triadic[1].hex);
+    color.secondTriadic = {
       id: generateId(),
       shades: triadicShades,
       variables: [...triadicShades]
@@ -116,9 +144,9 @@ const addShades = (color) => {
 
     color.primaries = [
       color.primary.shades.find(isPrimary),
-      color.analogus.shades.find(isPrimary),
       color.complementary.shades.find(isPrimary),
-      color.triadic.shades.find(isPrimary),
+      color.firstAnalogus.shades.find(isPrimary),
+      color.firstTriadic.shades.find(isPrimary),
     ].map(addShadeId);
   }
 
