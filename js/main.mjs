@@ -47,6 +47,22 @@ const methods = {
     this.colorInput = Object.assign({}, palette);
   },
 
+  copyVariables() {
+    const containers = Array
+      .from(document.querySelectorAll('.color-variables'));
+
+    const getPContent = (pTag) => (pTag.textContent || '').trim();
+    const variables = containers
+      .map((container) => Array.from(
+        container.querySelectorAll('.color-variable-values')
+      ))
+      .map((pTags) => pTags.map(getPContent).join('\n'));
+
+    navigator.clipboard
+      .writeText(variables.join('\n\n'))
+      .then(() => this.message = { content: 'Copied!' });
+  },
+
   discard(palette) {
     this.storedColors = this.storedColors.filter((storedColor) => {
       return storedColor.id !== palette.id;

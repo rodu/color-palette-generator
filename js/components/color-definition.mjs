@@ -121,7 +121,7 @@ const addShades = (color) => {
       shades: analogusShades,
       variables: [...analogusShades]
         .reverse()
-        .map(scaleToVariables, { name: 'analogus' })
+        .map(scaleToVariables, { name: 'second-analogus' })
     };
 
     let triadicShades = getColorScale(similarColors.triadic[0].hex);
@@ -139,7 +139,7 @@ const addShades = (color) => {
       shades: triadicShades,
       variables: [...triadicShades]
         .reverse()
-        .map(scaleToVariables, { name: 'triadic' })
+        .map(scaleToVariables, { name: 'second-triadic' })
     };
 
     color.primaries = [

@@ -13,10 +13,11 @@ const template = `
         </color-shade>
       </div>
     </div>
-    <div class="color-variables screen-only" v-if="showVariables">
+    <div class="color-variables screen-only" v-show="showVariables">
       <h3>SASS variables</h3>
       <p
         v-for="variable in definition.variables"
+        class="color-variable-values"
         v-bind:key="variable.id">
         {{variable.value}}
       </p>

@@ -53,6 +53,13 @@
                   title="Print Palette">
                   <i class="fas fa-print"></i>
                 </button>
+                <button
+                  @click="copyVariables()"
+                  class="btn btn-dark"
+                  :disabled="!colorInput.hex"
+                  title="Copy Variables">
+                  <i class="fas fa-copy"></i>
+                </button>
               </div>
               <div class="stored-colors" v-if="storedColors.length">
                 <h5>Stored Palettes</h5>
