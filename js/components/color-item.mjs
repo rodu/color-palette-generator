@@ -1,7 +1,7 @@
 
 const template = `
   <div class="color-item">
-    <h3 v-if="title">{{title}}</h3>
+    <h3 class="color-title" v-if="title">{{title}}</h3>
     <div class="color-shades">
       <div
         v-for="(shade, index) in definition.shades"

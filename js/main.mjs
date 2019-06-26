@@ -14,6 +14,8 @@ const getStoredColors = () => {
 const data = {
   colorInput: {},
   showVariables: false,
+  showSidebar: false,
+  sidebarHeight: 'auto',
   storedColors: [],
   message: ''
 };
@@ -43,7 +45,23 @@ const methods = {
     window.print();
   },
 
+  toggleSidebar() {
+    this.showSidebar = !this.showSidebar;
+
+    // We also adjust the sidebar height according to the current window size
+    // when showing the sidebar
+    if (this.showSidebar && !_.isEmpty(this.colorInput)) {
+      const bodyRect = document.body.getBoundingClientRect();
+      const bodyHeight = bodyRect.height;
+
+      this.sidebarHeight = bodyHeight ? bodyHeight + 'px' : 'auto';
+    }
+  },
+
   restore(palette) {
+    // First, let's close back the sidebar
+    this.toggleSidebar();
+
     this.colorInput = Object.assign({}, palette);
   },
 
