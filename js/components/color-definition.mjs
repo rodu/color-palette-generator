@@ -79,6 +79,8 @@ const addShadeId = (shade) => {
 const scaleToVariables = function(shade) {
   return {
     id: generateId(),
+    name: this.name,
+    shade: shade,
     value: `$${this.name}-${shade.group}: ${shade.hex};`
   };
 };

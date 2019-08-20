@@ -78,6 +78,15 @@
   margin-bottom: 20px;
 }
 
+.color-variables .overrides {
+  margin: 20px 0;
+}
+
+.color-variables .overrides .override-form {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 .color-variables p {
   font-family: monospace;
 }
