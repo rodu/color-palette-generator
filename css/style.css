@@ -82,6 +82,8 @@
   margin: 20px 0;
 }
 
+.color-variables .overrides label { margin: 10px 0; }
+
 .color-variables .overrides .override-form {
   margin-top: 10px;
   margin-bottom: 20px;
