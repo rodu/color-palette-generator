@@ -81,6 +81,14 @@ const methods = {
       .then(() => this.message = { content: 'Copied!' });
   },
 
+  uploadVariables() {
+    fetch('/variables', {
+      method: 'POST',
+      body: JSON.stringify({ variables: 'some data' }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  },
+
   discard(palette) {
     this.storedColors = this.storedColors.filter((storedColor) => {
       return storedColor.id !== palette.id;
