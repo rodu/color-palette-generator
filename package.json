@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "http-server": "^0.11.1"
+    "http-server": "^14.1.1"
   },
   "dependencies": {
     "palette-creator": "^0.5.4",
